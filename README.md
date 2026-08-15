@@ -72,6 +72,7 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 ## Foto's
 Node-RED flow:
   <img width="929" height="165" alt="image" src="https://github.com/user-attachments/assets/9d60ee43-3bf0-4a4b-9e23-b062ef367b60" />
+
 Node-RED debug:
   <img width="226" height="148" alt="image" src="https://github.com/user-attachments/assets/32c5bccc-a315-41b3-be19-645937b8933c" />
 
@@ -82,4 +83,6 @@ InfluxDB dashboard:
 Portainer:
   <img width="1586" height="337" alt="image" src="https://github.com/user-attachments/assets/1772dd67-03b9-4166-9a6d-b202c03e5615" />
 
+MQTT Explorer:
+  <img width="202" height="52" alt="image" src="https://github.com/user-attachments/assets/1209b6ef-5834-49b7-9de2-c636bae4babc" />
 
