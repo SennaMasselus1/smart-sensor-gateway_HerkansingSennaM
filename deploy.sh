@@ -3,6 +3,7 @@
 echo "🚀 Start met de automatische deployment van de Smart Sensor Gateway..."
 
 echo "📥 Controleren op updates..."
+docker compose pull
 
 echo "🛑 Oude containers stoppen..."
 docker compose down
