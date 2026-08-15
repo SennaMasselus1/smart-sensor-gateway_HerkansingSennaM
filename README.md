@@ -71,6 +71,15 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 
 ## Foto's
 Node-RED flow:
-```bash
   <img width="929" height="165" alt="image" src="https://github.com/user-attachments/assets/9d60ee43-3bf0-4a4b-9e23-b062ef367b60" />
-```
+Node-RED debug:
+  <img width="226" height="148" alt="image" src="https://github.com/user-attachments/assets/32c5bccc-a315-41b3-be19-645937b8933c" />
+
+
+InfluxDB dashboard:
+  <img width="1791" height="536" alt="image" src="https://github.com/user-attachments/assets/cb461f2f-14ac-482a-ba68-7cb7c083fcf9" />
+
+Portainer:
+  <img width="1586" height="337" alt="image" src="https://github.com/user-attachments/assets/1772dd67-03b9-4166-9a6d-b202c03e5615" />
+
+
