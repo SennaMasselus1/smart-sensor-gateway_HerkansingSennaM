@@ -1,0 +1,152 @@
+[
+    {
+        "id": "9ae6fae73b65c10d",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8b04334bfa41e8d0",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt-broker",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "219f8cba63b819b3",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "a8626a9c179f30aa",
+        "type": "mqtt in",
+        "z": "9ae6fae73b65c10d",
+        "name": "",
+        "topic": "sensor/#",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "8b04334bfa41e8d0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "7cb6b48997d1d555"
+            ]
+        ]
+    },
+    {
+        "id": "7cb6b48997d1d555",
+        "type": "function",
+        "z": "9ae6fae73b65c10d",
+        "name": "Valideer Data",
+        "func": "// Haal het topic en de data (payload) op\nlet topic = msg.topic;\nlet data = msg.payload;\n\n// 1. Controleer of het joystick data is\nif (topic === \"sensor/joystick\") {\n    // Validatie: x en y moeten tussen -100 en 100 liggen\n    if (data.x >= -100 && data.x <= 100 && data.y >= -100 && data.y <= 100) {\n        msg.sensor_type = \"joystick\"; // Handig label voor straks in de database\n        return msg; // De data is correct, stuur door!\n    } else {\n        node.warn(\"Foute joystick meting genegeerd!\");\n        return null; // Blokkeer de data\n    }\n}\n\n// 2. Controleer of het knop data is\nelse if (topic === \"sensor/knop\") {\n    // Validatie: status mag alleen 0 of 1 zijn\n    if (data.status === 0 || data.status === 1) {\n        msg.sensor_type = \"knop\"; \n        return msg; // De data is correct, stuur door!\n    } else {\n        node.warn(\"Foute knop meting genegeerd!\");\n        return null; // Blokkeer de data\n    }\n}\n\n// Blokkeer alle onbekende topics\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "a1b2265d41e751c3"
+            ]
+        ]
+    },
+    {
+        "id": "c8e5e4014946a5eb",
+        "type": "debug",
+        "z": "9ae6fae73b65c10d",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a1b2265d41e751c3",
+        "type": "function",
+        "z": "9ae6fae73b65c10d",
+        "name": "Formatteer voor InfluxDB",
+        "func": "// We gebruiken het label dat we in de vorige stap hebben toegevoegd\nif (msg.sensor_type === \"joystick\") {\n    msg.measurement = \"joystick_data\"; // De tabelnaam in InfluxDB\n    msg.payload = {\n        x: msg.payload.x,\n        y: msg.payload.y\n    };\n} else if (msg.sensor_type === \"knop\") {\n    msg.measurement = \"knop_data\"; // De tabelnaam in InfluxDB\n    msg.payload = {\n        status: msg.payload.status\n    };\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 120,
+        "wires": [
+            [
+                "56ad77b5d417e661",
+                "c8e5e4014946a5eb"
+            ]
+        ]
+    },
+    {
+        "id": "56ad77b5d417e661",
+        "type": "influxdb out",
+        "z": "9ae6fae73b65c10d",
+        "influxdb": "219f8cba63b819b3",
+        "name": "InfluxDB Dashboard",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "school",
+        "bucket": "sensordata",
+        "x": 900,
+        "y": 120,
+        "wires": []
+    }
+]
