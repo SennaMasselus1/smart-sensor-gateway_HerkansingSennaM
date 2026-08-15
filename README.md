@@ -59,3 +59,11 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 
 ### Automatisering in een echte CI/CD PipeLine
 
+## Poorten
+| Service | Poort | Beschrijving / URL |
+| :--- | :--- | :--- |
+| **Node-RED** | `1880` | [http://localhost:1880](http://localhost:1880) *(Dataflows & Logica)* |
+| **InfluxDB** | `8086` | [http://localhost:8086](http://localhost:8086) *(Database & Dashboard)* |
+| **Portainer** | `9000` | [http://localhost:9000](http://localhost:9000) *(Container Management)* |
+| **MQTT Broker (Mosquitto)** | `1883` | MQTT Client verbindingen |
+| **MQTT Broker (Websocket)** | `9001` | MQTT over WebSockets |
