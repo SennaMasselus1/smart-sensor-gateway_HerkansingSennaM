@@ -67,3 +67,10 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 | **Portainer** | `9000` | [http://localhost:9000](http://localhost:9000) *(Container Management)* |
 | **MQTT Broker (Mosquitto)** | `1883` | MQTT Client verbindingen |
 | **MQTT Broker (Websocket)** | `9001` | MQTT over WebSockets |
+
+
+## Foto's
+Node-RED flow:
+```bash
+  <img width="929" height="165" alt="image" src="https://github.com/user-attachments/assets/9d60ee43-3bf0-4a4b-9e23-b062ef367b60" />
+```
