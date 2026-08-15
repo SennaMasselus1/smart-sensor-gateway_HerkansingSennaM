@@ -51,7 +51,7 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 3. **'docker compose up -d --build'**: Herbouwt de Python-sensorcontainer (zodat eventuele codewijzigingen direct worden doorgevoerd) en start de volledige stack in de achtergrond.
 4. **'docker compose ps'**: Toont direct een overzicht van de actieve containers en hun status.
 
-**Hoe te gebruiken op een Linux-systeem (getest met bash deploy.sh Windows)
+**Hoe deployen** (getest met bash deploy.sh Windows)
 ```bash
   chmod +x deploy.sh
   ./deploy.sh
@@ -101,3 +101,17 @@ Portainer:
 MQTT Explorer:
  * <img width="202" height="52" alt="image" src="https://github.com/user-attachments/assets/1209b6ef-5834-49b7-9de2-c636bae4babc" />
 
+## Reflectie
+Voor deze herkansing heb ik het Smart Sensor Gateway project volledig opnieuw opgebouwd. 
+
+**Wat ging goed?**
+Het opzetten van het Docker Compose-bestand verliep heel goed. Daarnaast heb ik de Node-RED flow vlot kunnen uitwerken en kon ik zonder problemen een stabiele verbinding met InfluxDB tot stand brengen.
+
+**Waar liep ik tegenaan? (Uitdagingen)**
+Tijdens het schrijven van de automatiseringsscripts (`deploy.sh` en `backup.sh`) liep ik tegen een typisch cross-platform probleem aan. Omdat ik op Windows ontwikkelde, kregen mijn bash-scripts automatisch CRLF (Windows) line-endings in plaats van LF (Linux). Hierdoor faalde het script in eerste instantie. Door dit te debuggen en de line-endings aan te passen, heb ik geleerd hoe belangrijk het is om rekening te houden met het besturingssysteem waarop je code uiteindelijk draait.
+
+**Wat heb ik geleerd?**
+Deze herkansing heeft mijn inzicht in CloudComputing-principes enorm vergroot. Bij het maken van het back-upscript dacht ik in eerste instantie alleen aan de database (InfluxDB). Toen ik kritischer ging nadenken, realiseerde ik me dat de visuele logica (Node-RED flows) en de broker-configuraties (Mosquitto) net zo cruciaal zijn om het systeem na een crash volledig te kunnen herstellen. Ook begrijp ik nu veel beter hoe lokale bash-scripts de fundering vormen voor grotere, geautomatiseerde CI/CD pipelines.
+
+**Conclusie**
+Ik kijk met een goed gevoel terug op dit project. Het systeem werkt naar behoren en ik heb hier veel door bijgeleerd.
