@@ -69,12 +69,12 @@ In een geautomatiseerde pipeline neemt een server het handwerk over. De flow zie
 
 ## BONUS Backup-script
 Dit script pakt de volumes in en slaat ze op als een gecomprimeerd `.tar.gz` archief in de map `./backups`.
+
 **Uitvoeren van een backup:** (getest met bash backup.sh Windows)
 ```bash
   chmod +x backup.sh
   ./backup.sh
 ```
-Dit maakt een backup-folder indien dit er nog niet is en comprimeert alle belangrijke mappen naar één backup archief.
 
 ## Poorten
 | Service | Poort | Beschrijving / URL |
