@@ -43,6 +43,19 @@ Zodra de containers actief zijn, kun je via de browser toegang krijgen tot de vo
 * InfluxDB: http://localhost:8086
 * Portainer: http://localhost:9000
 
+## Shellscript & CI/CD PipeLine Automatisering
+### Het Shellscript ('deploy.sh')
+Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces lokaal. Het script voert achtereenvolgens de volgende acties uit:
+1. **'docker compose pull'**: Controleert en downloadt eventuele updates van de gebruikte Docker images (zoals InfluxDB en Node-RED).
+2. **'docker compose down'**: Stopt en ruimt de oude containers netjes op.
+3. **'docker compose up -d --build'**: Herbouwt de Python-sensorcontainer (zodat eventuele codewijzigingen direct worden doorgevoerd) en start de volledige stack in de achtergrond.
+4. **'docker compose ps'**: Toont direct een overzicht van de actieve containers en hun status.
 
+**Hoe te gebruiken op een Linux-systeem
+```bash
+  chmod +x deploy.sh
+  ./deploy.sh
+```
 
+### Automatisering in een echte CI/CD PipeLine
 
