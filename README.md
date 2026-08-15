@@ -15,7 +15,7 @@ De applicatie maakt gebruik van een microservices-architectuur waarbij elke comp
 Clone het project.
 ```bash
   git clone https://github.com/SennaMasselus1/smart-sensor-gateway_HerkansingSennaM.git
-  cd smart-sensor-gateway
+  cd smart-sensor-gateway_HerkansingSennaM
 ```
 
 Kopieer het voorbeeld-configuratiebestand om je eigen omgevingsvariabelen in te stellen.
