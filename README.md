@@ -51,7 +51,7 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 3. **'docker compose up -d --build'**: Herbouwt de Python-sensorcontainer (zodat eventuele codewijzigingen direct worden doorgevoerd) en start de volledige stack in de achtergrond.
 4. **'docker compose ps'**: Toont direct een overzicht van de actieve containers en hun status.
 
-**Hoe te gebruiken op een Linux-systeem
+**Hoe te gebruiken op een Linux-systeem '(getest met bash deploy.sh Windows)'
 ```bash
   chmod +x deploy.sh
   ./deploy.sh
