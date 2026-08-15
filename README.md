@@ -7,7 +7,7 @@ De applicatie maakt gebruik van een microservices-architectuur waarbij elke comp
 ### Componenten
 1. **Sensor Simulator (python):** Genereert gesimuleerde sensorwaarden en publiceert deze periodiek via het MQTT-protocol.
 2. **MQTT broker (Mosquitto):** Ontvangt alle berichten van de sensor en fungeert als centrale berichtenbus (pub/sub).
-3. **Node-RED:** Abonneert zich op de MQTT-broker, verwerkt de inkomende data enstuurt deze door naar het dashboard.
+3. **Node-RED:** Abonneert zich op de MQTT-broker, verwerkt de inkomende data en stuurt deze door naar het dashboard.
 4. **InfluxDB:** Een high-performance tijdsreeksdatabase (time-series database) die geoptimaliseerd is voor het opslaan en bevragen van sensorhistorie.
 5. **Portainer:** Biedt een webinterface voor het monitoren en beheren van alle actieve Docker-containers.
 
@@ -51,13 +51,30 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 3. **'docker compose up -d --build'**: Herbouwt de Python-sensorcontainer (zodat eventuele codewijzigingen direct worden doorgevoerd) en start de volledige stack in de achtergrond.
 4. **'docker compose ps'**: Toont direct een overzicht van de actieve containers en hun status.
 
-**Hoe te gebruiken op een Linux-systeem '(getest met bash deploy.sh Windows)'
+**Hoe te gebruiken op een Linux-systeem (getest met bash deploy.sh Windows)
 ```bash
   chmod +x deploy.sh
   ./deploy.sh
 ```
 
-### Automatisering in een echte CI/CD PipeLine
+### Automatisering in een echte CI/CD Pipeline
+Hoewel we dit project nu lokaal starten door handmatig `./deploy.sh` uit te voeren, zou dit in een professionele productie-omgeving volledig geautomatiseerd worden met een CI/CD-tool (Continuous Integration & Continuous Deployment), zoals **GitHub Actions** of **GitLab CI**.
+
+In een geautomatiseerde pipeline neemt een server het handwerk over. De flow ziet er dan als volgt uit:
+1. **Code Push:** Een developer past de code aan (bijvoorbeeld een wijziging in de Python-sensor of Node-RED configuratie) en pusht dit naar de `main`-branch op GitHub.
+2. **Trigger:** De CI/CD-tool detecteert de wijziging en start automatisch een deployment-workflow.
+3. **Serververbinding:** De pipeline maakt via een beveiligde SSH-verbinding contact met de productieserver.
+4. **Code Update & Deploy:** De pipeline voert automatisch een `git pull` uit om de nieuwste code op te halen, en roept daarna direct ons `./deploy.sh` script aan.
+5. **Zero-Touch Update:** Het deployment-script herbouwt de gewijzigde containers en herstart de services. Het systeem is geüpdatet zonder dat een beheerder zelf hoefde in te loggen op de server.
+
+## BONUS Backup-script
+Dit script pakt de volumes in en slaat ze op als een gecomprimeerd `.tar.gz` archief in de map `./backups`.
+**Uitvoeren van een backup:** (getest met bash backup.sh Windows)
+```bash
+  chmod +x backup.sh
+  ./backup.sh
+```
+Dit maakt een backup-folder indien dit er nog niet is en comprimeert alle belangrijke mappen naar één backup archief.
 
 ## Poorten
 | Service | Poort | Beschrijving / URL |
@@ -68,14 +85,12 @@ Het meegeleverde script 'deploy.sh' automatiseert het volledige deploymentproces
 | **MQTT Broker (Mosquitto)** | `1883` | MQTT Client verbindingen |
 | **MQTT Broker (Websocket)** | `9001` | MQTT over WebSockets |
 
-
 ## Foto's
 Node-RED flow:
  * <img width="929" height="165" alt="image" src="https://github.com/user-attachments/assets/9d60ee43-3bf0-4a4b-9e23-b062ef367b60" />
 
 Node-RED debug:
  * <img width="226" height="148" alt="image" src="https://github.com/user-attachments/assets/32c5bccc-a315-41b3-be19-645937b8933c" />
-
 
 InfluxDB dashboard:
  * <img width="1791" height="536" alt="image" src="https://github.com/user-attachments/assets/cb461f2f-14ac-482a-ba68-7cb7c083fcf9" />
